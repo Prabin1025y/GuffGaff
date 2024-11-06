@@ -2,7 +2,7 @@ import React from 'react'
 
 const SearchBar = () => {
     return (
-        <div class="flex px-4 py-3 rounded-full bg-sky-800 overflow-hidden max-w-md mx-auto font-[sans-serif]">
+        <div className="flex px-4 py-3 rounded-full bg-sky-800 overflow-hidden max-w-md mx-auto font-[sans-serif]">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px"
                 className="fill-white mr-3 rotate-90">
                 <path

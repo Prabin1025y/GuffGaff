@@ -11,7 +11,7 @@ const MessageContainer = () => {
             <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
           </div>
         </div>
-        <p className='text-2xl'>Prabin Acharya <p className='text-sm font-thin'>Active now</p></p>
+        <div className='text-2xl'>Prabin Acharya <p className='text-sm font-thin'>Active now</p></div>
       </div>
       <hr className='my-5 border-sky-500' />
       <div className='max-h-[80%] overflow-y-auto scrollbar-thin scrollbar-thumb-sky-700 scrollbar-track-transparent'>
@@ -41,7 +41,7 @@ const MessageContainer = () => {
         <Message />
         <Message />
       </div>
-      <div class="flex items-center px-4 py-3 my-3 rounded-full bg-sky-800 overflow-hidden h-fit mx-auto font-[sans-serif] text-wrap">
+      <div className="flex items-center px-4 py-3 my-3 rounded-full bg-sky-800 overflow-hidden h-fit mx-auto font-[sans-serif] text-wrap">
         <input type="text" placeholder="Type A message" className="w-full outline-none bg-transparent text-white text-sm text-wrap" />
         <FiSend className='size-6 cursor-pointer ' />
       </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import useSignUp from '../../hooks/useSignUp';
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
 
@@ -72,11 +73,11 @@ const SignUp = () => {
                     </div>
 
                     <div className="!mt-12">
-                        <button type="submit" className="w-full py-3 px-4 text-sm tracking-wider font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
-                            Create an account
+                        <button type="submit" className="w-full py-3 px-4 text-sm tracking-wider font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none" disabled={isLoading}>
+                            {isLoading ? <span className='loading loading-spinner'></span> : "Create an account"}
                         </button>
                     </div>
-                    <p className=" text-sm mt-6 text-center">Already have an account? <a className="text-blue-600 font-semibold hover:underline ml-1">Login here</a></p>
+                    <p className=" text-sm mt-6 text-center">Already have an account? <Link to="/login" className="text-blue-600 font-semibold hover:underline ml-1">Login here</Link></p>
                 </form>
             </div>
         </div>

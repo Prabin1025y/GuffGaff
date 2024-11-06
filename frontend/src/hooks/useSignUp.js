@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from "react-toastify";
-import { useAuthContext } from '../context/AuthCOntext';
+import { useAuthContext } from '../context/AuthContext';
 
 const useSignUp = () => {
 

@@ -5,7 +5,7 @@ import Home from "./pages/home/Home"
 import { ToastContainer } from "react-toastify"
 
 import 'react-toastify/dist/ReactToastify.css';
-import { useAuthContext } from "./context/AuthCOntext"
+import { useAuthContext } from "./context/AuthContext"
 
 function App() {
 

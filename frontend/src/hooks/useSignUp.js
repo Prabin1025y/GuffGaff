@@ -34,10 +34,7 @@ const useSignUp = () => {
             localStorage.setItem("userInfo", JSON.stringify(response.result));
 
             setAuthUser(response.result);
-
-
-
-
+            toast.success(`Welcome to GuffGaff ${response.result.gender === "male" ? "Mr." : "Mrs."} ${response.result.fullName}`);
 
         } catch (error) {
 

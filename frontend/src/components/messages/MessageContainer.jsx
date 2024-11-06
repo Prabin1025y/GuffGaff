@@ -1,52 +1,89 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Message from './Message'
 import { FiSend } from "react-icons/fi";
+import useConversation from '../../zustand/useConversations';
+import useSendMessage from '../../hooks/useSendMessage';
+import useGetMessages from '../../hooks/useGetMessages';
+import MessageSkeleton from './MessageSkeleton';
 
 const MessageContainer = () => {
+  const [currentMessage, setCurrentMessage] = useState("");
+
+  const { selectedUser, setSelectedUser } = useConversation();
+  const { sendMessage } = useSendMessage();
+  const { loading, messages } = useGetMessages();
+
+
+  useEffect(() => {
+    return () => setSelectedUser(null);
+  }, [])
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    await sendMessage(currentMessage);
+    setCurrentMessage("");
+
+  }
+
+
   return (
     <div className='flex-1 bg-sky-950 p-10'>
-      <div className='flex gap-5 items-center font-semibold'>
-        <div className="avatar online size-16">
-          <div className="w-24 rounded-full">
-            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+      {selectedUser ?
+        <>
+          <div className='flex gap-5 items-center font-semibold'>
+            <div className="avatar online size-16">
+              <div className="w-24 rounded-full">
+                <img src={selectedUser?.profilePicture} />
+              </div>
+            </div>
+            <div className='text-2xl'>{selectedUser?.fullName} <p className='text-sm font-thin'>{selectedUser?.username}</p></div>
           </div>
-        </div>
-        <div className='text-2xl'>Prabin Acharya <p className='text-sm font-thin'>Active now</p></div>
-      </div>
-      <hr className='my-5 border-sky-500' />
-      <div className='max-h-[80%] overflow-y-auto scrollbar-thin scrollbar-thumb-sky-700 scrollbar-track-transparent'>
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-      </div>
-      <div className="flex items-center px-4 py-3 my-3 rounded-full bg-sky-800 overflow-hidden h-fit mx-auto font-[sans-serif] text-wrap">
-        <input type="text" placeholder="Type A message" className="w-full outline-none bg-transparent text-white text-sm text-wrap" />
-        <FiSend className='size-6 cursor-pointer ' />
-      </div>
+          <hr className='my-5 border-sky-500' />
+          <div className='max-h-[80%] min-h-[80%] flex flex-col justify-end overflow-y-auto scrollbar-thin scrollbar-thumb-sky-700 scrollbar-track-transparent'>
+            {loading && <>
+              <MessageSkeleton />
+              <MessageSkeleton />
+              <MessageSkeleton />
+              <MessageSkeleton />
+              <MessageSkeleton />
+              <MessageSkeleton />
+              <MessageSkeleton />
+            </>
+            }
+            {!loading && messages.length < 1 &&
+              <p className='flex justify-center items-center'>Send a message to start conversation</p>
+            }
+
+            {console.log(messages.length)}
+            {!loading && messages.length > 0 &&
+
+              messages.map((item) => (
+                <Message key={item._id} message={item} />
+              ))
+              
+            }
+          </div>
+          <form onSubmit={handleSubmit}>
+            <div className="flex items-center px-4 py-3 my-3 rounded-full bg-sky-800 overflow-hidden h-fit mx-auto font-[sans-serif] text-wrap">
+              <input onChange={(e) => setCurrentMessage(e.target.value)} value={currentMessage} type="text" placeholder="Type A message" className="w-full outline-none bg-transparent text-white text-sm text-wrap" />
+              <button type="submit">
+                <FiSend className='size-6 cursor-pointer ' />
+              </button>
+            </div>
+          </form>
+        </>
+        :
+        <EmptyMessage />
+      }
     </div>
   )
 }
 
-export default MessageContainer
+export default MessageContainer;
+
+const EmptyMessage = () => {
+  return (
+    <div className='flex justify-center items-center'>Select someone to start conversation.</div>
+  )
+}

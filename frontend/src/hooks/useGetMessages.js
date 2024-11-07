@@ -7,7 +7,6 @@ const useGetMessages = () => {
     const { messages, setMessages, selectedUser } = useConversation();
 
     useEffect(() => {
-        console.log("Hello");
         
         setLoading(true);
         const getMessages = async () => {
@@ -23,8 +22,6 @@ const useGetMessages = () => {
 
                 if (!response.success)
                     throw new Error(response.message);
-
-                console.log(response);
 
 
                 setMessages(response.result);

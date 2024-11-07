@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Message from './Message'
 import { FiSend } from "react-icons/fi";
 import useConversation from '../../zustand/useConversations';
@@ -13,10 +13,20 @@ const MessageContainer = () => {
   const { sendMessage } = useSendMessage();
   const { loading, messages } = useGetMessages();
 
+  const lastMessageRef = useRef();
+
 
   useEffect(() => {
     return () => setSelectedUser(null);
   }, [])
+
+  useEffect(() => {
+    setTimeout(() => {
+
+      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  }, [messages])
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -40,7 +50,7 @@ const MessageContainer = () => {
             <div className='text-2xl'>{selectedUser?.fullName} <p className='text-sm font-thin'>{selectedUser?.username}</p></div>
           </div>
           <hr className='my-5 border-sky-500' />
-          <div className='max-h-[80%] min-h-[80%] flex flex-col justify-end overflow-y-auto scrollbar-thin scrollbar-thumb-sky-700 scrollbar-track-transparent'>
+          <div className='max-h-[80%] min-h-[80%] overflow-y-auto scrollbar-thin scrollbar-thumb-sky-700 scrollbar-track-transparent'>
             {loading && <>
               <MessageSkeleton />
               <MessageSkeleton />
@@ -59,9 +69,11 @@ const MessageContainer = () => {
             {!loading && messages.length > 0 &&
 
               messages.map((item) => (
-                <Message key={item._id} message={item} />
+                <div ref={lastMessageRef} key={item._id}>
+                  <Message message={item} />
+                </div>
               ))
-              
+
             }
           </div>
           <form onSubmit={handleSubmit}>

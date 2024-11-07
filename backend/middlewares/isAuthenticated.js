@@ -8,21 +8,21 @@ const isAuthenticated = async (req, res, next) => {
 
         //check if token exists or not
         if (!token)
-            return res.status(401).json({ success: false, message: "User Not Logged In!" });
+            return res.status(401).json({ success: false, message: "User Not Logged In! 1" });
 
         //decode the token to get payload
         const decodedPayLoad = jwt.verify(token, process.env.JWT_SECRET);
 
         //check if token is valid or not
         if (!decodedPayLoad)
-            return res.status(401).json({ success: false, message: "User Not Logged In!" });
+            return res.status(401).json({ success: false, message: "User Not Logged In! 2" });
 
         // find the user with decoded user id
         const user = await userModel.findById(decodedPayLoad.userId).select("-password");
 
         //check if the user exists or not
         if (!user)
-            return res.status(401).json({ success: false, message: "User Not Logged In!" });
+            return res.status(401).json({ success: false, message: "User Not Logged In! 3" });
 
         //set the user info in req
         req.user = user;

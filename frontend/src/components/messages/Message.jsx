@@ -1,6 +1,7 @@
 import React from 'react'
-import { useAuthContext } from '../../context/AuthCOntext';
+import { useAuthContext } from '../../context/AuthContext';
 import useConversation from '../../zustand/useConversations';
+import formatTime from '../../utils/timeFormat';
 
 const Message = ({ message }) => {
   const { authUser } = useAuthContext();
@@ -16,7 +17,7 @@ const Message = ({ message }) => {
             src={fromMe ? authUser.profilePicture : selectedUser.profilePicture} />
         </div>
       </div>
-      <div className={`chat-bubble text-white  break-words max-w-[80%] ${fromMe ? "bg-sky-500" : "bg-zinc-900"}`}><p className='h-3 text-xs font-extralight text-gray-300 w-full flex justify-end my-1'>22:23</p>{message.message}</div>
+      <div className={`chat-bubble text-white  break-words max-w-[80%] ${fromMe ? "bg-sky-500" : "bg-zinc-900"}`}><p className='h-3 text-xs font-extralight text-gray-300 w-full flex justify-end my-1'>{formatTime(message.createdAt)}</p>{message.message}</div>
 
     </div>
 

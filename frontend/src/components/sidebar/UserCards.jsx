@@ -1,14 +1,19 @@
 import React from 'react'
 import useConversation from '../../zustand/useConversations';
 
-const UserCards = ({ user }) => {
+const UserCards = ({ user, setSearchText }) => {
     const { selectedUser, setSelectedUser } = useConversation();
 
     const isSelected = selectedUser?._id === user?._id;
 
+    const onClickHandler = () => {
+        setSelectedUser(user);
+        setSearchText("");
+    }
+
     return (
         <>
-            <div onClick={()=>setSelectedUser(user)} className={`py-3 px-4 flex justify-between items-center hover:bg-sky-700 rounded-sm transition duration-300 cursor-pointer ${isSelected && "bg-sky-700"}`}>
+            <div onClick={onClickHandler} className={`py-3 px-4 flex justify-between items-center hover:bg-sky-700 rounded-sm transition duration-300 cursor-pointer ${isSelected && "bg-sky-700"}`}>
                 <div className=' flex gap-3 items-center font-semibold'>
                     <div className="avatar online size-12">
                         <div className="w-24 rounded-full">

@@ -2,6 +2,9 @@ import userModel from "../models/userModel.js";
 import bcrypt from 'bcryptjs';
 import generateTokenAndSetCookie from "../utils/jwtGenerate.js";
 
+import { createAvatar } from '@dicebear/core';
+import { micah } from '@dicebear/collection';
+
 // signup logic
 export const signup = async (req, res) => {
     console.log("signup");
@@ -25,13 +28,24 @@ export const signup = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
+        //avatar url generation
+        const avatar = createAvatar(micah, {
+            seed: username,
+            radius: 50,
+            backgroundColor: ["b6e3f4", "c0aede", "d1d4f9"],
+            baseColor: ["ac6651", "f9c9b6"],
+            facialHairProbability: gender === "male" ? 60 : 0,
+            hair: gender === "male" ? ["dougFunny", "fonze", "mrClean", "mrT", "turban"] : ["dannyPhantom", "full", "pixie"],
+        });
+
+
         //create a new user from usermodel using above info
         const newUser = new userModel({
             fullName,
             username,
             password: hashedPassword,
             gender,
-            profilePicture: `https://avatar.iran.liara.run/public/${gender === "male" ? "boy" : "girl"}?username=${username}`
+            profilePicture: avatar.toDataUri()
         })
 
         if (newUser) {
@@ -46,6 +60,7 @@ export const signup = async (req, res) => {
                     _id: newUser._id,
                     fullName: newUser.fullName,
                     username: newUser.username,
+                    gender: newUser.gender,
                     profilePicture: newUser.profilePicture
                 }
             })
@@ -80,6 +95,7 @@ export const login = async (req, res) => {
                 _id: user._id,
                 fullName: user.fullName,
                 username: user.username,
+                gender: user.gender,
                 profilePicture: user.profilePicture,
             }
         });

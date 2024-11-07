@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
-import { useAuthContext } from '../context/AuthCOntext';
+import { useAuthContext } from '../context/AuthContext';
 
 const useGetUsers = () => {
 
@@ -15,9 +15,6 @@ const useGetUsers = () => {
 
                 const res = await fetch("/api/users");
                 const response = await res.json();
-
-                console.log("going");
-                
 
                 if (!res || !response) {
                     throw new Error("Some error occured while fetching");

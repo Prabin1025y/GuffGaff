@@ -1,13 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SearchBar from './SearchBar'
 import UserContainer from './UserContainer'
 import { IoLogOutOutline } from "react-icons/io5";
 import useLogOut from '../../hooks/useLogOut';
-import { useAuthContext } from '../../context/AuthCOntext';
+import { useAuthContext } from '../../context/AuthContext';
+import useGetUsers from '../../hooks/useGetUsers';
 
 const SideBar = () => {
+
+    const [searchText, setSearchText] = useState("");
+    const [searchUsers, setSearchUsers] = useState([]);
+
     const { logout, isLoading } = useLogOut();
-    const {authUser} = useAuthContext();
+    const { authUser } = useAuthContext();
+    const { loading, users } = useGetUsers();
+
+    useEffect(() => {
+        const filteredUsers = users?.filter((item) => item.fullName.toLowerCase().includes(searchText.toLowerCase()));
+        setSearchUsers(filteredUsers);
+    }, [searchText])
+
+
     return (
         <div className='w-[30%] bg-sky-900 p-8'>
 
@@ -24,9 +37,9 @@ const SideBar = () => {
 
             <div className='divider divide-gray-200'></div>
 
-            <SearchBar />
+            <SearchBar searchText={searchText} setSearchText={setSearchText} />
 
-            <UserContainer />
+            <UserContainer loading={loading} users={searchText === "" ? users : searchUsers} setSearchText={setSearchText} />
         </div>
     )
 }

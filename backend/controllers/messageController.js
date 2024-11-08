@@ -1,5 +1,6 @@
 import conversationModel from "../models/conversationModel.js";
 import messageModel from "../models/messageModel.js";
+import { getUserSocketId, io } from "../socket/socket.js";
 
 export const sendMessage = async (req, res) => {
 
@@ -20,6 +21,9 @@ export const sendMessage = async (req, res) => {
             });
         }
 
+        if (!message)
+            return;
+
         //create the message and push it to conversation messages field
         const newMessage = new messageModel({
             senderId,
@@ -27,19 +31,21 @@ export const sendMessage = async (req, res) => {
             message
         });
 
-        console.log(message);
-
 
         if (newMessage) {
             conversation.messages.push(newMessage._id);
         }
-
-        //SOCKET FUNCTIONALITY WILL GO HERE
-
         // await conversation.save();
         // await newMessage.save();
 
         await Promise.all([conversation.save(), newMessage.save()]); //both process will execute in parallel
+
+        //SOCKET FUNCTIONALITY WILL GO HERE
+        const userSocketId = getUserSocketId(receiverId);
+        if (userSocketId) {
+            //used to send event to a specific user rather than whole connected user
+            io.to(userSocketId).emit("newMessage", newMessage);
+        }
 
         //send the response with message
         res.status(201).json({ success: true, result: newMessage })

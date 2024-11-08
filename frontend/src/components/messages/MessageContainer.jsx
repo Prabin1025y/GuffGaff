@@ -5,6 +5,7 @@ import useConversation from '../../zustand/useConversations';
 import useSendMessage from '../../hooks/useSendMessage';
 import useGetMessages from '../../hooks/useGetMessages';
 import MessageSkeleton from './MessageSkeleton';
+import useListenToMessage from '../../hooks/useListenToMessage';
 
 const MessageContainer = () => {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -12,6 +13,7 @@ const MessageContainer = () => {
   const { selectedUser, setSelectedUser } = useConversation();
   const { sendMessage } = useSendMessage();
   const { loading, messages } = useGetMessages();
+  useListenToMessage();
 
   const lastMessageRef = useRef();
 
@@ -65,7 +67,6 @@ const MessageContainer = () => {
               <p className='flex justify-center items-center'>Send a message to start conversation</p>
             }
 
-            {console.log(messages.length)}
             {!loading && messages.length > 0 &&
 
               messages.map((item) => (

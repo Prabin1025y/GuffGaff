@@ -1,6 +1,6 @@
-import express from "express";
 import cookieParser from "cookie-parser";
 import cors from 'cors';
+import express from "express"
 import "dotenv/config"
 
 import authRouter from "./routes/authRouter.js";
@@ -8,9 +8,9 @@ import messageRouter from "./routes/messageRouter.js";
 import userRouter from "./routes/userRouter.js";
 
 import connectToDatabase from "./Database/connect.js";
+import { app, server } from "./socket/socket.js";
 
 
-const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 })
 
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     connectToDatabase();
     console.log("listening to port ", PORT);
 

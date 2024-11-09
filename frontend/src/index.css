@@ -5,11 +5,26 @@
 @tailwind utilities;
 
 body{
-  background-color: rgb(3, 34, 59);
+  /* background-color: rgb(3, 34, 59); */
+  background-image: url("/bg.jpg");
+  background-repeat: repeat;
+  background-size: contain;
   height: 100vh;
   width: 100vw;
   /* background-color: red; */
   color: white;
   padding: 10px 10vw;
+}
+
+@media (max-width: 1200px) {
+  body{
+    padding: 10px 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  body{
+    padding: 0px 0px;
+  }
 }
 

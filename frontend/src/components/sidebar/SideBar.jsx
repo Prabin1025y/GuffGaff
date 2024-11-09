@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SearchBar from './SearchBar'
 import UserContainer from './UserContainer'
-import { IoLogOutOutline } from "react-icons/io5";
+import { IoLogOutOutline, IoMenu } from "react-icons/io5";
 import useLogOut from '../../hooks/useLogOut';
 import { useAuthContext } from '../../context/AuthContext';
 import useGetUsers from '../../hooks/useGetUsers';
@@ -10,6 +10,7 @@ const SideBar = () => {
 
     const [searchText, setSearchText] = useState("");
     const [searchUsers, setSearchUsers] = useState([]);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const { logout, isLoading } = useLogOut();
     const { authUser } = useAuthContext();
@@ -20,11 +21,25 @@ const SideBar = () => {
         setSearchUsers(filteredUsers);
     }, [searchText])
 
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth > 768)
+                setIsMenuOpen(false);
+        }
+
+        window.addEventListener("resize", handleResize);
+
+        handleResize();
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, [])
+
+
 
     return (
-        <div className='w-[30%] bg-sky-900 p-8'>
+        <div className={`${isMenuOpen ? "absolute w-[100%] xs:rounded-3xl h-screen xs:w-calc-100-10px xs:h-[98vh]" : "w-16 xs:w-24 md:w-[35%] lg:w-[30%]"} transition-all duration-300 bg-sky-900 p-2 lg:p-8 z-10`}>
 
-            <div className='flex gap-2 items-center mb-6'>
+            <div className={`${isMenuOpen ? "flex" : "hidden md:flex"} gap-2 items-center mb-6 px-6 pt-6 lg:px-0 lg:pt-0`}>
                 <img className='h-12 aspect-square' src={authUser.profilePicture} alt="avatar" />
                 <p className='text-lg font-semibold'>{authUser.fullName}</p>
                 <div className='flex-1 flex justify-end items-center'>
@@ -35,11 +50,14 @@ const SideBar = () => {
                 </div>
             </div>
 
-            <div className='divider divide-gray-200'></div>
+            {/* <img className='h-12 aspect-square mx-auto md:hidden' src={authUser.profilePicture} alt="menu" /> */}
+            <IoMenu onClick={() => setIsMenuOpen(true)} className={`${isMenuOpen && "hidden"} size-6 xs:size-8 aspect-square mx-auto md:hidden`} />
 
-            <SearchBar searchText={searchText} setSearchText={setSearchText} />
+            <div className={`${isMenuOpen ? "" : "hidden md:block "} divider divide-gray-200`}></div>
 
-            <UserContainer loading={loading} users={searchText === "" ? users : searchUsers} setSearchText={setSearchText} />
+            <span className={`${isMenuOpen || " hidden md:inline"}`}><SearchBar searchText={searchText} setSearchText={setSearchText} /></span>
+
+            <UserContainer loading={loading} users={searchText === "" ? users : searchUsers} setSearchText={setSearchText} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
         </div>
     )
 }

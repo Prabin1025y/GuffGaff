@@ -6,6 +6,7 @@ import useSendMessage from '../../hooks/useSendMessage';
 import useGetMessages from '../../hooks/useGetMessages';
 import MessageSkeleton from './MessageSkeleton';
 import useListenToMessage from '../../hooks/useListenToMessage';
+import { useSocketContext } from '../../context/SocketContext';
 
 const MessageContainer = () => {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -14,6 +15,9 @@ const MessageContainer = () => {
   const { sendMessage } = useSendMessage();
   const { loading, messages } = useGetMessages();
   useListenToMessage();
+
+  const { onlineUsers } = useSocketContext();
+  const isOnline = onlineUsers.includes(selectedUser?._id);
 
   const lastMessageRef = useRef();
 
@@ -40,16 +44,16 @@ const MessageContainer = () => {
 
 
   return (
-    <div className='flex-1 bg-sky-950 p-10'>
+    <div className='flex-1 bg-sky-950 py-10 px-2 sm:px-10'>
       {selectedUser ?
         <>
-          <div className='flex gap-5 items-center font-semibold'>
-            <div className="avatar online size-16">
+          <div className='flex gap-1 xs:gap-5 items-center font-semibold'>
+            <div className={`avatar size-10 xs:size-16 ${isOnline ? "online" : ""}`}>
               <div className="w-24 rounded-full">
                 <img src={selectedUser?.profilePicture} />
               </div>
             </div>
-            <div className='text-2xl'>{selectedUser?.fullName} <p className='text-sm font-thin'>{selectedUser?.username}</p></div>
+            <div className='text-lg xs:text-2xl'>{selectedUser?.fullName} <p className='text-sm font-thin'>{selectedUser?.username}</p></div>
           </div>
           <hr className='my-5 border-sky-500' />
           <div className='max-h-[80%] min-h-[80%] overflow-y-auto scrollbar-thin scrollbar-thumb-sky-700 scrollbar-track-transparent'>

@@ -24,7 +24,7 @@ const SignUp = () => {
     }
 
     return (
-        <div className="flex flex-col justify-center font-[sans-serif] h-[98vh] p-4">
+        <div className="flex flex-col justify-center font-[sans-serif] h-[98vh] p-0 sm:p-4">
             <div className="max-w-md w-full mx-auto bg-sky-950 shadow-xl rounded-2xl p-8">
                 <div className="text-center mb-6">
                     <h2>GuffGaff</h2>

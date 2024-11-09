@@ -3,7 +3,7 @@ import SearchBar from './SearchBar'
 import UserContainer from './UserContainer'
 import { IoLogOutOutline, IoMenu } from "react-icons/io5";
 import useLogOut from '../../hooks/useLogOut';
-import { useAuthContext } from '../../context/AuthContext';
+import { useAuthContext } from '../../context/AuthContextStore';
 import useGetUsers from '../../hooks/useGetUsers';
 
 const SideBar = () => {

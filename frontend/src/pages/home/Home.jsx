@@ -1,7 +1,6 @@
 import React from 'react'
 import SideBar from '../../components/sidebar/SideBar'
 import MessageContainer from '../../components/messages/MessageContainer'
-import MiniSideBar from '../../components/sidebar/MiniSideBar'
 
 const Home = () => {
     return (

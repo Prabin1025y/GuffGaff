@@ -1,6 +1,5 @@
 import React from 'react'
 import UserCards from './UserCards'
-import useGetUsers from '../../hooks/useGetUsers';
 
 const UserContainer = ({ loading, users, setSearchText, isMenuOpen, setIsMenuOpen }) => {
 

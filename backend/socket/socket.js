@@ -10,7 +10,7 @@ const server = http.createServer(app);
 //configuring the server as socket server
 const io = new Server(server, {
     cors: {
-        origin: [process.env.FRONTEND_URL],
+        origin: ["https://guffgaff-kpsd.onrender.com"],
         methods: ["GET", "POST"]
     }
 });

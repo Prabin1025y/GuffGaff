@@ -27,12 +27,9 @@ const Login = () => {
     return (
         <div className="flex flex-col justify-center font-[sans-serif] h-[98vh] p-0 sm:p-4">
             <div className="max-w-md w-full mx-auto bg-sky-950 shadow-xl rounded-2xl p-8">
-                <div className="text-center mb-6">
-                    <h2>GuffGaff</h2>
-                </div>
-
+                <img className=" mb-6 h-16 mx-auto" src="/logo.png"/>
                 <form onSubmit={handleOnSubmit}>
-                    <p className='text-3xl font-semibold mb-2 flex justify-center'>Login</p>
+                    {/* <p className='text-3xl font-semibold mb-2 flex justify-center'>Login</p> */}
                     <div className="space-y-6">
                         <div>
                             <label className=" text-sm mb-2 block">Username</label>

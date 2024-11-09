@@ -4,7 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { SocketContextProvider } from './context/SocketContext.jsx'
-import { AuthContextProvider } from './context/AuthContext'
+import { AuthContextProvider } from '/src/context/AuthContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

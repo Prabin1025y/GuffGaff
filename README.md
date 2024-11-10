@@ -9,7 +9,7 @@ A real-time chat application built using the MERN stack (MongoDB, Express, React
 ### Desktop
 ![Chat Interface](frontend/public/demo/homePage.png)
 ![Login](frontend/public/demo/Login.png)
-![SignUp](frontend/public/demo/Signup.png)
+![SignUp](frontend/public/demo/SignUp.png)
 ### Mobile
 ![Chat Interface Mobile](frontend/public/demo/homePageMobile.png)
 ![User Interface Mobile](frontend/public/demo/usersMobile.png)

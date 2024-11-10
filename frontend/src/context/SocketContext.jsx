@@ -16,7 +16,7 @@ export const SocketContextProvider = ({ children }) => {
     useEffect(() => {
         if (authUser) {
             //create a new socket connection and connect to backend
-            const socket = io("http://localhost:8000", {
+            const socket = io("https://guffgaff-kpsd.onrender.com", {
                 query: {
                     authUserId: authUser._id //passing query to the backend about current logged in user
                 }

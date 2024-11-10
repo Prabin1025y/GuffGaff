@@ -87,8 +87,7 @@ Run the start command
 
 The website will start in http://localhost:8000 or in PORT of your environment
 
-
-    ## Contributing
+## Contributing
 
 Contributions are welcome! Please fork the repository, create a new branch, and submit a pull request.
 
